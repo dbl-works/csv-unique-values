@@ -27,3 +27,27 @@ If we publish this to NPM, it'd be
 ```
 npx @dbl-works/csv-unique-values [options]
 ```
+
+## Example
+
+For an example input file `team.csv`
+
+```csv
+Name, Country
+Joe, US
+John, US
+John, DE
+```
+
+and running
+
+```npx @dbl-works/csv-unique-values --input team.csv --keys country --output ~/Desktop/team-country```
+
+will generate `country.json` with contents
+
+```json
+[
+  "DE",
+  "US"
+]
+```
