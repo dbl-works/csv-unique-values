@@ -2,6 +2,7 @@
   "name": "@dbl-works/csv-unique-values",
   "version": "1.0.0",
   "description": "Get unique values from a CSV file",
+  "bin": "./index.js",
   "main": "index.js",
   "repository": {
     "type": "git",
