@@ -1,6 +1,6 @@
 {
   "name": "@dbl-works/csv-unique-values",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Get unique values from a CSV file",
   "bin": "./index.js",
   "main": "index.js",
