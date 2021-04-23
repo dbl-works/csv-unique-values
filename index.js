@@ -29,7 +29,7 @@ class SetWithToJSONSupport extends Set {
     const asArray = Array.from(this);
 
     return program.opts().sort
-      ? asArray.sort((a, b) => a.localeCompare(b))
+      ? asArray.sort((a, b) => a.localeCompare(b, 'en', { numeric: true }))
       : asArray;
   }
 }
