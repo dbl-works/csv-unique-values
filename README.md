@@ -1,6 +1,6 @@
 # csv-unique-values
 
-A script to get unique values from rows in any CSV file.
+A script to get unique values from columns in any CSV file.
 
 Our use case is to run this script to populate in-app dropdowns with all possible values,
 but there's plenty more you can do with it, for example if you want to remove
@@ -16,7 +16,7 @@ Usage: node index.js [options]
 Options:
   -v, --version             output the version number
   -i, --input <file>        input CSV file
-  -k, --keys <keys>         keys to extract, comma-separated, all by default
+  -k, --keys <keys>         columns to extract, comma-separated, all by default
   -o, --output <directory>  output destination, will create a file per key
   --no-sort                 don't sort unique values
   -h, --help                display help for command
