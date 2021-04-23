@@ -11,12 +11,12 @@ program
   .requiredOption('-i, --input <file>', 'input CSV file')
   .option('-d, --delimiter <delimiter>', 'delimiter used in the CSV', ',')
   .option(
-    '-k, --keys <keys>',
-    'keys to extract, comma-separated, all by default'
+    '-c, --columns <columns>',
+    'columns to extract, comma-separated, all by default'
   )
   .option(
     '-o, --output <directory>',
-    'output destination, will create a file per key'
+    'output destination, will create a file per column'
   )
   .option('--no-sort', "don't sort unique values");
 
@@ -42,22 +42,22 @@ input
   })
   .pipe(parser({ separator: ';' }))
   .on('data', (data) => {
-    const keys = program.opts().keys
-      ? program.opts().keys.split(program.opts().delimiter)
+    const columns = program.opts().columns
+      ? program.opts().columns.split(program.opts().delimiter)
       : Object.keys(data);
 
-    keys.forEach((key) => {
-      const value = data[key];
+    columns.forEach((column) => {
+      const value = data[column];
 
       if (typeof value === 'undefined') {
         return;
       }
 
-      if (!uniqueValues[key]) {
-        uniqueValues[key] = new SetWithToJSONSupport();
+      if (!uniqueValues[column]) {
+        uniqueValues[column] = new SetWithToJSONSupport();
       }
 
-      uniqueValues[key].add(value);
+      uniqueValues[column].add(value);
     });
   })
   .on('end', async () => {
@@ -81,11 +81,11 @@ input
       });
     })();
 
-    Object.entries(uniqueValues).forEach(([key, values]) => {
+    Object.entries(uniqueValues).forEach(([column, values]) => {
       const json = JSON.stringify(values, null, 2);
 
       const output = fs.createWriteStream(
-        path.resolve(parsedOutputPath, `${key}.json`)
+        path.resolve(parsedOutputPath, `${column}.json`)
       );
       output.write(json);
     });

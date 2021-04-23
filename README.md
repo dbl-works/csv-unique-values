@@ -14,12 +14,13 @@ Pull in this repository locally, then run
 Usage: node index.js [options]
 
 Options:
-  -v, --version             output the version number
-  -i, --input <file>        input CSV file
-  -k, --keys <keys>         columns to extract, comma-separated, all by default
-  -o, --output <directory>  output destination, will create a file per key
-  --no-sort                 don't sort unique values
-  -h, --help                display help for command
+  -v, --version                output the version number
+  -i, --input <file>           input CSV file
+  -d, --delimiter <delimiter>  delimiter used in the CSV (default: ",")
+  -c, --columns <columns>      columns to extract, comma-separated, all by default
+  -o, --output <directory>     output destination, will create a file per column
+  --no-sort                    don't sort unique values
+  -h, --help                   display help for command
 ```
 
 If we publish this to NPM, it'd be
