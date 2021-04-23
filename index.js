@@ -9,6 +9,7 @@ program.version('0.0.1', '-v, --version');
 
 program
   .requiredOption('-i, --input <file>', 'input CSV file')
+  .option('-d, --delimiter <delimiter>', 'delimiter used in the CSV', ',')
   .option(
     '-k, --keys <keys>',
     'keys to extract, comma-separated, all by default'
@@ -42,7 +43,7 @@ input
   .pipe(parser({ separator: ';' }))
   .on('data', (data) => {
     const keys = program.opts().keys
-      ? program.opts().keys.split(',')
+      ? program.opts().keys.split(program.opts().delimiter)
       : Object.keys(data);
 
     keys.forEach((key) => {
