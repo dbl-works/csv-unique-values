@@ -42,10 +42,10 @@ input
   .on('error', (error) => {
     console.error('Error while reading input file', error);
   })
-  .pipe(parser({ separator: ';' }))
+  .pipe(parser({ separator: program.opts().delimiter }))
   .on('data', (data) => {
     const columns = program.opts().columns
-      ? program.opts().columns.split(program.opts().delimiter)
+      ? program.opts().columns.split(',')
       : Object.keys(data);
 
     columns.forEach((column) => {
