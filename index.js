@@ -14,7 +14,7 @@ program
   .option('-d, --delimiter <delimiter>', 'delimiter used in the CSV', ',')
   .option(
     '-c, --columns <columns>',
-    'columns to extract, comma-separated, all by default'
+    'columns to extract, comma-separated\nyou can get unique values per unique values from another column by\nchaining them together using `::`\n(default: all columns)'
   )
   .option(
     '-o, --output <directory>',
