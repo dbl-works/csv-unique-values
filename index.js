@@ -72,7 +72,7 @@ input
 
     await (async () => {
       return new Promise((resolve) => {
-        fs.mkdir(parsedOutputPath, { resursive: true }, (err) => {
+        fs.mkdir(parsedOutputPath, { recursive: true }, (err) => {
           if (err && err.code !== 'EEXIST') {
             console.error('Error creating output directory', parsedOutputPath);
             console.error(err);
