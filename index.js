@@ -43,23 +43,58 @@ input
     console.error('Error while reading input file', error);
   })
   .pipe(parser({ separator: program.opts().delimiter }))
-  .on('data', (data) => {
+  .on('data', (row) => {
     const columns = program.opts().columns
       ? program.opts().columns.split(',')
-      : Object.keys(data);
+      : Object.keys(row);
 
     columns.forEach((column) => {
-      const value = data[column];
+      const groups = column.split('::');
 
-      if (typeof value === 'undefined') {
+      if (groups.length === 1) {
+        const value = row[column];
+
+        if (typeof value === 'undefined') {
+          return;
+        }
+
+        if (!uniqueValues[column]) {
+          uniqueValues[column] = new SetWithToJSONSupport();
+        }
+
+        uniqueValues[column].add(value);
         return;
       }
 
       if (!uniqueValues[column]) {
-        uniqueValues[column] = new SetWithToJSONSupport();
+        uniqueValues[column] = {};
       }
 
-      uniqueValues[column].add(value);
+      let target = uniqueValues[column];
+
+      groups.forEach((group, i) => {
+        const value = row[group];
+
+        if (typeof value === 'undefined') {
+          return;
+        }
+
+        if (i === groups.length - 1) {
+          target.add(value);
+        } else if (i === groups.length - 2) {
+          if (!target[value]) {
+            target[value] = new SetWithToJSONSupport();
+          }
+
+          target = target[value];
+        } else {
+          if (!target[value]) {
+            target[value] = {};
+          }
+
+          target = target[value];
+        }
+      });
     });
   })
   .on('end', async () => {
@@ -87,8 +122,9 @@ input
       const json = JSON.stringify(values, null, 2);
 
       const output = fs.createWriteStream(
-        path.resolve(parsedOutputPath, `${column}.json`)
+        path.resolve(parsedOutputPath, `${column.replace(/::/gi, '-')}.json`)
       );
+
       output.write(json);
     });
   });
